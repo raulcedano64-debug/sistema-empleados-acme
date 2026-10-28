@@ -13,7 +13,7 @@ def crear_bd():
     conexion = sqlite3.connect("database/EMPLEADOS.db")
     cursor = conexion.cursor()
 
-     cursor.execute("""
+        cursor.execute("""
         CREATE TABLE IF NOT EXISTS empleado (
             curp TEXT PRIMARY KEY,
             nombre TEXT NOT NULL,
