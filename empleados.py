@@ -61,7 +61,19 @@ def alta_empleado():
     apellido = input("Apellido: ").strip()
     calle = input("Calle: ").strip()
     colonia = input("Colonia: ").strip()
-    telefono = input("Telefono: ").strip()
+    telefono = input("Telefono: ").strip()    try:
+        edad = int(input("Edad: "))
+        sueldo_mensual = float(input("Sueldo mensual: "))
+
+        if edad < 0 or sueldo_mensual < 0:
+            print("La edad y el sueldo no pueden ser negativos.")
+            conexion.close()
+            return
+
+    except ValueError:
+        print("Error: ingresa una edad y un sueldo validos.")
+        conexion.close()
+        return
 
     if not curp or not nombre or not apellido:
         print("Error: CURP, nombre y apellido son obligatorios.")
