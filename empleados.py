@@ -13,16 +13,32 @@ def crear_bd():
     conexion = sqlite3.connect("database/EMPLEADOS.db")
     cursor = conexion.cursor()
 
-    cursor.execute("""
+     cursor.execute("""
         CREATE TABLE IF NOT EXISTS empleado (
             curp TEXT PRIMARY KEY,
             nombre TEXT NOT NULL,
             apellido TEXT NOT NULL,
             calle TEXT,
             colonia TEXT,
-            telefono TEXT
+            telefono TEXT,
+            edad INTEGER NOT NULL DEFAULT 18,
+            sueldo_mensual REAL NOT NULL DEFAULT 0
         )
     """)
+
+    # Agregar los campos si la tabla ya existia
+    cursor.execute("PRAGMA table_info(empleado)")
+    columnas = [fila[1] for fila in cursor.fetchall()]
+
+    if "edad" not in columnas:
+        cursor.execute(
+            "ALTER TABLE empleado ADD COLUMN edad INTEGER NOT NULL DEFAULT 18"
+        )
+
+    if "sueldo_mensual" not in columnas:
+        cursor.execute(
+            "ALTER TABLE empleado ADD COLUMN sueldo_mensual REAL NOT NULL DEFAULT 0"
+        )
 
     conexion.commit()
     conexion.close()
